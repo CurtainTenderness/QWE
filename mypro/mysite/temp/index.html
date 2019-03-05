@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>根目录首页</title>
+</head>
+<body>
+<form action="/index" method="post">
+    {% csrf_token %}
+    <h1>首页</h1>
+    <h2>{{msg}}</h2>
+</form>
+</body>
+</html>
