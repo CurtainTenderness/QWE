@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册界面</title>
+</head>
+<body>
+<form action="/myblog/signin/" method="post">
+    {% csrf_token %}
+    姓名：<input type="text" name="name"><br>
+    密码：<input type="password" name="password"><br>
+    邮箱：<input type="email" name="email"><br>
+    年龄：<input type="number" name="age"><br>
+    <input type="submit" value="注册"><br>
+</form>
+{{msg}}
+</body>
+</html>
