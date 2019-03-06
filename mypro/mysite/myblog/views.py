@@ -7,15 +7,18 @@ from django.views.decorators.http import require_GET,require_POST
 from django.views.decorators.csrf import csrf_exempt
 from django.forms.models import model_to_dict
 from django.core.serializers import serialize
-
+from django.core.cache import cache
 # 事物的导入
 from django.db import transaction
-
+# 字节流
+from io import BytesIO
+from . import ubils
 # 封装
 from . import forms
 
 # Create your views here.
 # 主页
+@csrf_exempt
 def index(request):
     # print('博客')
     # return HttpResponse('博客')
@@ -80,4 +83,40 @@ def addarticle(req):
             return HttpResponse('失败')
         # return redirect(reverse('myblog:index'))
 
+# 缓存
+def list(req):
+    users = cache.get('users')
+    print(users)
+    if users is None:
+        print('数据库查询')
+        users = models.Users.objects.all()
+        print()
+        print('存入缓存')
+        cache.set('users',users)
+        print(cache.get('users'))
+    return HttpResponse('成功')
 
+
+# 验证码
+def createmage(req):
+    # 准备个空间防止验证码图片
+    b=BytesIO()
+    # 生成验证码图片
+    img,code=ubils.create_code()
+    # 把验证码图片保存到流里面,图片不能用JPG格式，只能用png格式
+    img.save(b,'PNG')
+    # 方便拿过来用户输入做验证
+    req.session['code']=code
+    return HttpResponse(b.getvalue())
+
+# ajax
+@csrf_exempt
+def jsontest(req):
+    # 单个对象的处理
+    u=models.Users.objects.get(pk=1)
+    u=model_to_dict(u)
+    # return JsonResponse(u)
+    # 多个对象的列表
+    users=models.Users.objects.all()
+    users=serialize('json',users)
+    return HttpResponse(users)

@@ -12,7 +12,29 @@
 <a href="/myblog/login/">登录</a><br>
 <a href="/myblog/signin/">注册</a><br>
 <a href="/myblog/addarticle/">发布文章</a><br>
-<button id="user" onclick=""></button>
 
+{# ajax  #}
+<button id="user" onclick="">获取json单个数据</button>
+<script src="/static/myblog/js/lib/jquery-2.1.4.js"></script>
+<script>
+    $(function(){
+        $("#user").click(function(){
+            $.ajax({
+                {# 指定路径 #}
+                url:"/myblog/jsontest/",
+                {# 请求方式 #}
+                type:"POST",
+                {# 获取回来的东西指定类型 #}
+                dataType:"JSON",
+                success:function(data){
+                {# 弹出单个 #}
+                    //alert(data['name'])
+                    //alert('1111')
+                    alert(data[1]['fields']['name'])
+                }
+            })
+        })
+    })
+</script>
 </body>
 </html>
