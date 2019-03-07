@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'myblog',
     'tinymce',
+    'haystack',
+    'mysearch',
 ]
 
 MIDDLEWARE = [
@@ -154,3 +156,12 @@ EMAIL_HOST_PASSWORD = 'xxxxxxxxxx'
 EMAIL_USE_TLS = True
 # 收件人看到的发件人, 必须是一直且有效的
 EMAIL_FROM = 'Tencent<674608896@qq.com>'
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'mysearch.whoosh_cn_backend.WhooshEngine',  # 将来需要修改
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    }
+}
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'

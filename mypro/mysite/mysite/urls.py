@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^myblog/',include('myblog.urls')),
     url(r'^index/$', views.index),
+    url(r'^search/',include("haystack.urls"))
 ]
