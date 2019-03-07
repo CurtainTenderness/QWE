@@ -140,3 +140,17 @@ CACHES = {
         }
     }
 }
+
+# qq IMAP/SMTP 配置
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_PORT = 25  # 或者 465/587 是设置了 SSL 加密方式
+# 发送邮件的邮箱
+EMAIL_HOST_USER = '674608896@qq.com'
+# 在邮箱中设置的客户端授权密码
+# 如果重新设置了新的授权码,直接使用最新的授权码即可
+EMAIL_HOST_PASSWORD = 'xxxxxxxxxx'
+# 这里必须是 True，否则发送不成功
+EMAIL_USE_TLS = True
+# 收件人看到的发件人, 必须是一直且有效的
+EMAIL_FROM = 'Tencent<674608896@qq.com>'

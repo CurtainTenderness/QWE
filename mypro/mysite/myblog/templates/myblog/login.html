@@ -9,8 +9,9 @@
     {% csrf_token %}
     姓名：<input type="text" name="name" /><br>
     密码：<input type="password" name="password" /><br>
+    验证码：<input type="text">
     {# 验证码图片 onclick定位改变验证码的方法 #}
-    <img src="/myblog/createmage/" alt="图片" onclick="refresh_check_code(this)">
+    <img src="/myblog/createmage/" alt="图片" onclick="refresh_check_code(this)"><br>
     <input type="submit" value="登录">
 </form>
 {# 点击改变验证码 #}

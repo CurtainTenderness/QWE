@@ -8,6 +8,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.forms.models import model_to_dict
 from django.core.serializers import serialize
 from django.core.cache import cache
+# 分页使用
+from django.core.paginator import Paginator,Page
 # 事物的导入
 from django.db import transaction
 # 字节流
@@ -31,6 +33,7 @@ def login(req):
     elif req.method=='POST':
         name=req.POST.get('name')
         password=req.POST.get('password')
+
         try:
             models.Users.objects.get(name=name,password=password)
             user=models.Users.objects.get(id=1)
@@ -48,10 +51,22 @@ def signin(req):
         password = req.POST.get('password')
         email = req.POST.get('email')
         age = req.POST.get('age')
+        # 头像图片
+        # 拼接上传路径
+        avater = req.FILES['avater']
+        # 头像图片保存的位置，只能在根目录中
+        path='static/img/'+avater.name
+        # 以流的方式打开上传
+        with open(path,'wb') as file:
+            # 分片写入
+            for f in avater.chunks():
+                file.write(f)
+        # print(avater)
         try:
-            user=models.Users(name=name,password=password,email=email,age=age)
+            user=models.Users(name=name,password=password,email=email,age=age,avater=path)
             user.save()
-            return render(req,'myblog/login.html',{'msg':'请登录'})
+            return HttpResponse('注册成功')
+            # return render(req,'myblog/login.html',{'msg':'请登录'})
         except:
             return render(req,"myblog/signin.html",{'msg':'注册失败'})
 
@@ -109,6 +124,8 @@ def createmage(req):
     req.session['code']=code
     return HttpResponse(b.getvalue())
 
+
+
 # ajax
 @csrf_exempt
 def jsontest(req):
@@ -120,3 +137,11 @@ def jsontest(req):
     users=models.Users.objects.all()
     users=serialize('json',users)
     return HttpResponse(users)
+
+
+
+from django.core.mail import send_mail
+from django.conf import settings
+def sendmails(req):
+    send_mail('发送邮件','第一次尝试',settings.EMAIL_FROM,['529095032@qq.com'])
+    return HttpResponse('发送成功')

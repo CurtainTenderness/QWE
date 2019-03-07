@@ -5,12 +5,13 @@
     <title>注册界面</title>
 </head>
 <body>
-<form action="/myblog/signin/" method="post">
+<form action="/myblog/signin/" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     姓名：<input type="text" name="name"><br>
     密码：<input type="password" name="password"><br>
     邮箱：<input type="email" name="email"><br>
     年龄：<input type="number" name="age"><br>
+    头像：<input type="file" name="avater">
     <input type="submit" value="注册"><br>
 </form>
 {{msg}}

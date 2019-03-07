@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^signin/$',views.signin,name='signin'),
     url(r'^addarticle/$',views.addarticle,name='addarticle'),
     url(r'^list/$',views.list,name='list'),
+    url(r'^sendmails/$',views.sendmails,name='sendmails'),
     url(r'^createmage/$',views.createmage,name='createmage'),
     url(r'^jsontest/$',views.jsontest,name='jsontest'),
 ]

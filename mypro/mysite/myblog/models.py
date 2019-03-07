@@ -15,7 +15,10 @@ class Users(models.Model):
     email=models.EmailField()
     # 年龄
     age=models.IntegerField()
-
+    # 头像图片
+    avater=models.CharField(max_length=255,default='/static/myblog/img/tu1.png')
+    # 这种简单的需要自己实现
+    # avater=models.ImageField(upload_to='')
 # 定义文章类型
 class Article(models.Model):
     # 文章编号
